@@ -52,90 +52,16 @@ if tuning=='Tuning':
     if gamma=='float':
         gamma=st.sidebar.number_input('Gamma Value (Have to think about range)')
 
+    if kernel=='poly' or kernel=='sigmoid':
+        coef0=st.sidebar.number_input('Coefficient 0 (Have to think about name, range)')
+    else:
+        coef0=0.0
 
-    # learning_rate=st.sidebar.number_input('Learning Rate',value=0.1)
-    #
-    # n_estimators=st.sidebar.slider('Boosting Stages (n_estimators)',min_value=1,max_value=500,value=100)
-    #
-    # subsample=st.sidebar.number_input('Subsample',min_value=0.01,max_value=1.0,value=1.0)
-    #
-    # criterion=st.sidebar.selectbox(
-    #     'Criterion',
-    #     ('friedman_mse','mse','mae')
-    # )
-    #
-    # min_samples_split=st.sidebar.slider('Minimum Samples Split',value=2,min_value=2)
-    #
-    # min_samples_leaf=st.sidebar.slider('Minimum Samples Leaf',min_value=1,value=1)
-    #
-    # min_weight_fraction_leaf=st.sidebar.number_input('Minimum Weight Fraction',min_value=0.0,max_value=1.0,value=0.0)
-    #
-    # max_depth=st.sidebar.slider('Maximum Depth',min_value=2,value=3)
-    #
-    # min_impurity_decrease=st.sidebar.number_input('Minimum Impurity Decrease',min_value=0.0,max_value=1.0,value=0.0)
-    #
-    # min_impurity_split=st.sidebar.selectbox('Minimum Impurity Split',
-    #                                         ('None','Value Input')
-    #                                         )
-    # if min_impurity_split=='None':
-    #     min_impurity_split=None
-    # else:
-    #     min_impurity_split=st.sidebar.number_input('Value',min_value=0.0000000,value=0.0000000,step=0.0000001,format='%.7f')
-    #
-    # init=st.sidebar.selectbox(
-    #     'Init',
-    #     ('zero','estimator')
-    # )
-    # if init=='estimator':
-    #     st.sidebar.error('This feature can only be used if you have made another model, whose outcome is to be used as the initial estimates of your Gradient Boosting model.')
-    #     st.info("Set 'Init' parameter value to 'zero'")
-    #
-    # random_state=st.sidebar.selectbox('Random State',
-    #                                   ('None','Value Input')
-    #                                   )
-    #
-    # if random_state=='None':
-    #     random_state=None
-    # else:
-    #     random_state=st.sidebar.slider('Random State',min_value=1,value=1)
-    #
-    # max_features=st.sidebar.selectbox(
-    #     'Max Features',
-    #     ('None','auto','sqrt','log2'),
-    # )
-    # if max_features=='None':
-    #     max_features=None
-    #
-    # verbose=st.sidebar.slider('Verbose (Printing has to be noted)',min_value=0,value=0)
-    #
-    # max_leaf_nodes=st.sidebar.selectbox('Maximum Leaf Nodes',
-    #                                     ('None','Value Input')
-    #                                     )
-    # if max_leaf_nodes=='None':
-    #     max_leaf_nodes=None
-    # else:
-    #     max_leaf_nodes=st.sidebar.slider('Value',min_value=1)
-    #
-    # warm_start=st.sidebar.selectbox(
-    #     'Warm Start',
-    #     ('False','True')
-    # )
-    #
-    # validation_fraction=st.sidebar.number_input('Validation Fraction',min_value=0.0,max_value=1.0,value=0.1)
-    #
-    # n_iter=st.sidebar.selectbox('n Iteration No Change',
-    #                      ('None','Value')
-    #                      )
-    # if n_iter=='Value':
-    #     n_iter_no_change= st.sidebar.slider('Value')
-    # else:
-    #     n_iter_no_change=None
-    #
-    # tol=st.sidebar.number_input('Tolerance',min_value=0.0000,value=0.0001,step=0.0001,format='%.4f')
-    #
-    # ccp_alpha=st.sidebar.number_input('Cost-Complexity Pruning Alpha',value=0.0,min_value=0.0000)
+    tol=st.sidebar.number_input('Tolerance (Have to think about range)',value=0.001)
 
-    clf=SVR(kernel,degree)
+    C=st.sidebar.number_input('C (Regularization Parameter) (Have to think about range <=1)',min_value=0.01,value=1.00)
+
+    clf=SVR(kernel,degree,gamma,coef0,C)
 else:
     clf=SVR()
 
