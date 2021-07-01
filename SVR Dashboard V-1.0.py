@@ -59,9 +59,31 @@ if tuning=='Tuning':
 
     tol=st.sidebar.number_input('Tolerance (Have to think about range)',value=0.001)
 
-    C=st.sidebar.number_input('C (Regularization Parameter) (Have to think about range <=1)',min_value=0.01,value=1.00)
+    C=st.sidebar.number_input('C (Regularization Parameter) (Have to think about range <=1)',min_value=0.01,value=1.0)
 
-    clf=SVR(kernel,degree,gamma,coef0,C)
+    epsilon=st.sidebar.number_input('Epsilon Value',min_value=0.01,value=0.1)
+
+    shrinking=st.sidebar.selectbox(
+        'Shrinking',
+        ('True','False')
+    )
+    if shrinking=='True':
+        shrinking=True
+    else:
+        shrinking=False
+
+    cache_size=st.sidebar.slider('Cache Size (In MB) (Not Working!!)',value=200,max_value=500)
+
+    verbose=st.sidebar.selectbox(
+        'Verbose',
+        ('True','False')
+    )
+    if verbose=='True':
+        verbose=True
+    else:
+        verbose=False
+
+    clf=SVR(kernel,degree,gamma,coef0,C,epsilon,shrinking,cache_size,verbose)
 else:
     clf=SVR()
 

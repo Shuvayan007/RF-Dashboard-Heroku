@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/RF-Dashboard-Heroku.iml" filepath="$PROJECT_DIR$/.idea/RF-Dashboard-Heroku.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/SVR-Dashboard-Heroku.iml" filepath="$PROJECT_DIR$/.idea/SVR-Dashboard-Heroku.iml" />
     </modules>
   </component>
 </project>
