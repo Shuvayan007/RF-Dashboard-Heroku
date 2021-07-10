@@ -1,10 +1,11 @@
 import streamlit as st
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.datasets import make_moons
+from sklearn.datasets import load_boston
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVR
 from sklearn.metrics import accuracy_score
+import seaborn as sns  #Have to be started from here
 import subprocess
 
 def draw_meshgrid():
@@ -17,7 +18,8 @@ def draw_meshgrid():
 
     return XX, YY, input_array
 
-X,y=make_moons(n_samples=300,noise=0.2,random_state=20)
+X,y=load_boston(return_X_y=True)
+# (n_samples=300,noise=0.2,random_state=20)
 X_train,X_test,y_train,y_test=train_test_split(X,y)
 
 
@@ -83,14 +85,17 @@ if tuning=='Tuning':
     else:
         verbose=False
 
-    clf=SVR(kernel,degree,gamma,coef0,C,epsilon,shrinking,cache_size,verbose)
+    max_iter=st.sidebar.slider('Maximum Iteration',value=-1,max_value=500,min_value=-1)
+
+    clf=SVR(kernel,degree,gamma,coef0,C,epsilon,shrinking,cache_size,verbose, max_iter)
 else:
     clf=SVR()
 
 
 fig,ax=plt.subplots()
 
-ax.scatter(X.T[0],X.T[1],c=y,cmap='rainbow')
+# sns.scatter()
+ax.scatter(X.T[0],X.T[1],cmap='viridis')
 orig=st.pyplot(fig)
 
 
