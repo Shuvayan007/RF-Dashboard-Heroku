@@ -54,32 +54,35 @@ if tuning=='Tuning':
 
     C=st.sidebar.number_input('C (Regularization Parameter)',min_value=0.01,value=1.0)
 
-    # epsilon=st.sidebar.number_input('Epsilon Value',min_value=0.01,value=0.1)
-    #
-    # shrinking=st.sidebar.selectbox(
-    #     'Shrinking',
-    #     ('True','False')
-    # )
-    # if shrinking=='True':
-    #     shrinking=True
-    # else:
-    #     shrinking=False
-    #
-    # cache_size=st.sidebar.slider('Cache Size (In MB) (Not Working!!)',value=200,max_value=500)
-    #
-    # verbose=st.sidebar.selectbox(
-    #     'Verbose',
-    #     ('True','False')
-    # )
-    # if verbose=='True':
-    #     verbose=True
-    # else:
-    #     verbose=False
-    #
-    # max_iter=st.sidebar.slider('Maximum Iteration',value=-1,max_value=500,min_value=-1)
+    epsilon=st.sidebar.number_input('Epsilon Value',min_value=0.00 ,value=0.1)
 
-    clf=SVR(kernel,degree,gamma,coef0,tol,C)
-    #,epsilon,shrinking,cache_size,verbose, max_iter)
+    shrinking=st.sidebar.selectbox(
+        'Shrinking',
+        ('True','False')
+    )
+
+    if shrinking=='True':
+        shrinking=True
+    else:
+        shrinking=False
+
+    st.sidebar.info(':bulb: If the number of iterations is large, then shrinking can shorten the training time. However, if we loosely solve the optimization problem (e.g., by using a large stopping tolerance), the code without using shrinking may be much faster.')
+
+    cache_size=st.sidebar.number_input('Cache Size (In MB)',value=200,min_value=1,step=1)
+
+    verbose=st.sidebar.selectbox(
+        'Verbose (Catch output)',
+        ('False','True')
+    )
+    if verbose=='True':
+        verbose=True
+    else:
+        verbose=False
+
+    max_iter=st.sidebar.slider('Maximum Iteration (Left)',value=-1,max_value=500,min_value=-1)
+
+    clf=SVR(kernel,degree,gamma,coef0,tol,C,epsilon,shrinking,cache_size,verbose,max_iter)
+    #)
 else:
     clf=SVR()
 
