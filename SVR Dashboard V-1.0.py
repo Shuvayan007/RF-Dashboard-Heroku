@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 from sklearn.datasets import load_diabetes
 from sklearn.model_selection import train_test_split
 from sklearn.svm import SVR
-from sklearn.metrics import mean_squared_error
+from sklearn.metrics import mean_absolute_error
 
 
 X,y=load_diabetes(return_X_y=True)
@@ -25,7 +25,7 @@ tuning=st.sidebar.radio(
 if tuning=='Tuning':
     st.sidebar.info('Initially, all parameter values are set to default. Change them according to your need.:smiley:')
     kernel=st.sidebar.selectbox(
-        'Kernel Type',
+        'Kernel Type (Precomputed!!)',
         ('rbf','linear','poly','sigmoid','precomputed')
     )
 
@@ -66,6 +66,9 @@ if tuning=='Tuning':
     else:
         shrinking=False
 
+    st.sidebar.beta_expander(':bulb: Tips',expanded=False,
+                             ':bulb: If the number of iterations is large, then shrinking can shorten the training time. However, if we loosely solve the optimization problem (e.g., by using a large stopping tolerance), the code without using shrinking may be much faster.')
+
     st.sidebar.info(':bulb: If the number of iterations is large, then shrinking can shorten the training time. However, if we loosely solve the optimization problem (e.g., by using a large stopping tolerance), the code without using shrinking may be much faster.')
 
     cache_size=st.sidebar.number_input('Cache Size (In MB)',value=200,min_value=1,step=1)
@@ -82,7 +85,6 @@ if tuning=='Tuning':
     max_iter=st.sidebar.slider('Maximum Iteration (Left)',value=-1,max_value=500,min_value=-1)
 
     clf=SVR(kernel,degree,gamma,coef0,tol,C,epsilon,shrinking,cache_size,verbose,max_iter)
-    #)
 else:
     clf=SVR()
 
@@ -106,5 +108,5 @@ if st.sidebar.button('Run Algorithm'):
         plt.xlabel('Col1')
         plt.ylabel('Col2')
         orig=st.pyplot(fig)
-        st.sidebar.subheader("Mean absolute error of the model: "+str(round(mean_squared_error(y_test,y_pred),2)))
+        st.sidebar.subheader("Mean absolute error of the model: "+str(round(mean_absolute_error(y_test,y_pred),2)))
     st.success("Done!")
