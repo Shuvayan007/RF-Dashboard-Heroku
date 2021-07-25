@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.svm import SVR
 from sklearn.metrics import mean_absolute_error
 
+st.set_page_config(page_icon='📈')
 
 X,y=load_diabetes(return_X_y=True)
 df=pd.DataFrame(X)
@@ -66,10 +67,9 @@ if tuning=='Tuning':
     else:
         shrinking=False
 
-    st.sidebar.beta_expander(':bulb: Tips',expanded=False,
-                             ':bulb: If the number of iterations is large, then shrinking can shorten the training time. However, if we loosely solve the optimization problem (e.g., by using a large stopping tolerance), the code without using shrinking may be much faster.')
-
-    st.sidebar.info(':bulb: If the number of iterations is large, then shrinking can shorten the training time. However, if we loosely solve the optimization problem (e.g., by using a large stopping tolerance), the code without using shrinking may be much faster.')
+    with st.sidebar.beta_expander('Tips 💡'):
+        # Add user input widgets to the side bar
+        st.info(':bulb: If the number of iterations is large, then shrinking can shorten the training time. However, if we loosely solve the optimization problem (e.g., by using a large stopping tolerance), the code without using shrinking may be much faster.')
 
     cache_size=st.sidebar.number_input('Cache Size (In MB)',value=200,min_value=1,step=1)
 
