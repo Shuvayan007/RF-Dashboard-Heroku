@@ -82,7 +82,7 @@ if tuning=='Tuning':
     else:
         verbose=False
 
-    max_iter=st.sidebar.slider('Maximum Iteration (Left)',value=-1,max_value=500,min_value=-1)
+    max_iter=st.sidebar.slider('Maximum Iteration',value=-1,max_value=500,min_value=-1)
 
     clf=SVR(kernel,degree,gamma,coef0,tol,C,epsilon,shrinking,cache_size,verbose,max_iter)
 else:
@@ -98,12 +98,21 @@ orig=st.pyplot(fig)
 if st.sidebar.button('Run Algorithm'):
     with st.spinner('Your model is getting trained..:muscle:'):
         orig.empty()
+
+        x = np.linspace(X.min(), X.max(), X.shape[0]).reshape(X.shape)
+
+        if kernel=='precomputed':
+            X_test = np.dot(X_test, X_train.T)
+            X_train1=np.linspace(X_train.min(),X_train.max(),X_train.shape[0]).reshape(X_train.shape)
+            x = np.dot(x, X_train1.T)
+            # print(X_train)
+            X_train=np.dot(X_train, X_train.T)
+            # print(X_train)
+        # print(X_train.shape,X_test.shape)
         clf.fit(X_train,y_train)
         y_pred=clf.predict(X_test)
 
-
-        x=np.linspace(X.min(),X.max(),X.shape[0]).reshape(X.shape)
-        ax.plot(x,clf.predict(x),color='red')
+        ax.plot(x, clf.predict(x), color='red')
 
         plt.xlabel('Col1')
         plt.ylabel('Col2')
